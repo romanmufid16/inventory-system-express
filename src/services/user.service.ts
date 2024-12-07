@@ -14,14 +14,14 @@ export class UserService {
       request
     );
 
-    const checkEmail = await prismaClient.user.findUnique({
+    const checkUsername = await prismaClient.user.findUnique({
       where: {
-        email: registerRequest.email
+        username: registerRequest.username
       }
     });
 
-    if (checkEmail) {
-      throw new ResponseError(400, "Email already registered");
+    if (checkUsername) {
+      throw new ResponseError(400, "Username already registered");
     }
 
     registerRequest.password = await bcrypt.hash(registerRequest.password, 10);
@@ -41,7 +41,7 @@ export class UserService {
 
     const user = await prismaClient.user.findUnique({
       where: {
-        email: loginRequest.email
+        username: loginRequest.username
       }
     });
 
